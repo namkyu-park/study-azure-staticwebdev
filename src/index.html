@@ -1,17 +1,520 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
-  <title>Vanilla JavaScript App</title>
+	<meta charset="utf-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+	<title>Blog Title</title> <!-- Change to promotion title -->
+
+	<meta name="description" content="description description description description description"> <!-- Change to promotion content -->
+
+	<meta property="og:title" content="Blog Title">  <!-- Change to promotion title -->
+	<meta property="og:description" content="description description description description description"> <!-- Change to promotion content -->
+
+	<style>
+		/* Reset Start */
+		html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td{margin:0;padding:0; border:0;font-style:inherit;font-size:100%;font-family: inherit;vertical-align: baseline;font-size:12px;font-family:'HelveticaNeue-Light','AppleSDGothicNeo-Light','Malgun Gothic','맑은 고딕',sans-serif; font-weight:normal}
+		input,select,textarea{color:#989898; font-family:'HelveticaNeue-Light','AppleSDGothicNeo-Light','Malgun Gothic','맑은 고딕',sans-serif;}
+		table{border-collapse:collapse;border-spacing: 0;}
+		table, td, th{vertical-align: middle;font-weight: normal;}
+		ul, ol, li{list-style:none;}
+		a, img, fieldset{border:0 none;}
+		img { vertical-align:top; width:100%; height: auto;}
+		legend{display:none;}
+		caption{font-weight:normal;}
+		a{text-decoration:none;}
+		article,aside,canvas,details,figcaption,figure, footer,header,hgroup,menu,nav,section,summary{display:block;}
+		.blind{position:absolute;left:-5000px;top:0;visibility:hidden;overflow:hidden;line-height:0.1%;font-size:0.1%;width:0.1%;}
+		#btn a, #sns a{text-indent:-10000px;}
+		button {cursor:pointer;border:none;background-color: transparent;}
+		/* Reset End */
+
+		/* Skip nav Start */
+		#skip { position: relative; }
+		#skip a {
+			position: absolute; left:0; top: -35px; display: block; width:140px; color:#ffffff; background: #333333;
+			text-align: center; line-height: 30px; font-size: 12px; z-index: 200;
+		}
+		#skip a:active
+		, #skip a:focus {
+			top:0;
+		}
+		/* Skip nav End */
+
+		/* ICON Start */
+		.icon
+		, #gnb .gnb-content span a.icon-type {
+			position:relative; width:16px; height:16px; font-size:0; color:transparent; line-height:0; text-indent:-999999px; vertical-align:middle; background:url(./res/images/common/icon_01.png) no-repeat 0px 0px; -ms-background-size:150px 150px; -moz-background-size:150px 150px; -webkit-background-size:150px 150px; background-size:150px 150px; display:inline-block;
+		}
+		i.icon-type-webviewicon	{ width:30px; height:30px; background-position:0px -50px; }
+		i.icon-type-apponestore	{ width:48px; height:48px; background-position:0px -80px; }
+		
+		.icon-logo { width: 102px; height:20px; background-position: 0 0;}
+		.icon-ti-arrow { width: 15px; height:15px; background-position: -112px 0;}
+		.icon-share { width: 28px; height: 28px; background-position: 0 -70px;}
+		/* ICON End */
+
+		/* GNB Start */
+		#wrap { position:relative; padding:70px 0 0 0; margin:0 auto; width:100%; max-width:768px; }
+		.reservegnb { position:fixed; left:0; top:0; width:100%; height:70px; display:table;z-index:101; }
+		.reservegnb.white { background-color:rgba(255,255,255,0.9); }
+		.reservegnb .gnb-content { padding:20px 20px 20px 20px; }
+		.reservegnb.logotextMW {display: block}
+		.reservegnb.logotextMW .gnb-content .gnb-content-inner .gnb-content-left {float:none;}
+		.reservegnb.logotextMW .gnb-content .gnb-content-inner .gnb-content-left .gnb-link.oscMWgnbLink{
+			position: relative; padding: 0 0 0 101px; height: 30px; align-items: center;display:flex;
+		}
+		.reservegnb.logotextMW .gnb-content .gnb-content-inner .gnb-content-left .gnb-link.oscMWgnbLink .gnb-link-home {
+			position: absolute; left:0; top:50%; display: inline-block; width:101px; vertical-align: top;
+			transform: translate3d(0,-50%,0);
+		}
+		.reservegnb.logotextMW .gnb-content .gnb-content-inner .gnb-content-left .gnb-link.oscMWgnbLink .icon-ti-arrow {
+			display: inline-block; vertical-align: top; margin:0 3px;
+		}
+		.reservegnb.logotextMW .gnb-content .gnb-content-inner .gnb-content-left .gnb-link.oscMWgnbLink span {font-size: 17px; color: #010101; line-height: 30px; display: block; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;}
+		.reservegnb.logotextMW .gnb-content .gnb-content-inner .gnb-content-left .gnb-link.oscWebViewgnbLink {
+			position: relative; padding: 0 0 0 38px; height: 30px;
+		}
+		.reservegnb.logotextMW .gnb-content .gnb-content-inner .gnb-content-left .gnb-link.oscWebViewgnbLink .icon-back {
+			position: absolute;left: 0;top: 0;
+		}
+		.reservegnb.logotextMW .gnb-content .gnb-link.oscWebViewgnbLink span {
+			font-size: 17px; color: #010101;line-height: 30px;display: block;text-overflow: ellipsis;white-space: nowrap; overflow: hidden;
+		}
+		/* GNB Start */
+
+		/* Content Start */
+		.header-content { padding:0 20px 16px; }
+		.header-content .header-inner { border-bottom: 1px solid #E1E1E1; }
+		.header-content h1 { padding:8px 0 8px; }
+		.header-content h1 span{ font-size: 17px; line-height: 23px; font-weight: 700; }
+		.header-content p { padding: 0 0 24px; }
+		.header-content p span { font-size:14px; line-height: 20px; color: #353535;}
+
+		.article-content { padding:0 20px; }
+		.article-content .img-box { padding:16px 0;}
+		.article-content .img-box span + span { margin-top: 8px;}
+		.article-content .img-box span {
+			position:relative; display:block; overflow:hidden;
+			-moz-border-radius: 12px; -webkit-border-radius: 12px; border-radius: 12px;
+		}
+		.article-content .img-box span:after {
+			content:""; position: absolute; top:0; left:0; width: 100%; height:100%; border:1px solid rgba(0,0,0,0.04);
+			-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+			-moz-border-radius: 12px; -webkit-border-radius: 12px; border-radius: 12px;
+		}
+
+		.article-content .desc-box { padding: 16px 0; }
+		.article-content .desc-box span { display:block; font-size:14px; line-height: 20px; color:#000000; }
+		.article-content .desc-box span + span { padding-top: 8px;}
+		.article-content strong { font-size: 14px; line-height: 20px; font-weight: 700 !important; }
+		.article-content a.btn-text { font-size: 14px; line-height: 20px; display: block; text-decoration: underline; color: #4B469C; }
+
+		.index-box { padding:16px 0; }
+		.index-box-inner {
+			background-color: #F7F7F8; padding:24px; border:1px solid #ECECEC;
+			-moz-border-radius: 12px; -webkit-border-radius: 12px; border-radius: 12px;
+		}
+		.index-box .index-box-inner > span { font-size:16px; line-height: 22px; color:#000000; font-weight: 700; padding:0 0 20px 0; display: block;}
+		.index-box .index-list > li { }
+		.index-box .index-list > li + li { padding-top: 4px; }
+		.index-box .index-list > li a { display: block; color:#000000; }
+		.index-box .index-list > li p { font-size:13px; line-height: 19px; color:#000000; display: table; width: 100%; table-layout: fixed}
+		.index-box .index-list > li p i {
+			display:table-cell; vertical-align: top; font-size:12px; line-height:19px; font-weight: 700; width: 20px;
+			text-align: center; padding-right: 4px;
+		}
+		.index-box .index-list > li p span { display: table-cell; font-size: 13px; line-height: 19px;  }
+
+		.index-box .sub-list { position: relative; margin:8px 0; padding-top: 4px; }
+		.index-box .sub-list li { position: relative; padding:0 0 0 40px; font-size:13px; line-height: 19px; }
+		.index-box .sub-list li + li { margin-top: 2px;}
+		.index-box .sub-list li:before { 
+			content: ""; position: absolute; top: 8px; left: 28px; width: 4px; height:4px; background-color: #000000;
+			-moz-border-radius: 2px; -webkit-border-radius: 2px; border-radius: 2px; 
+		}
+		.index-box a:hover
+		, .index-box a:hover span {
+			color:#4B469C !important;
+		}
+
+		.article-content h2 { padding:28px 0 16px; }
+		.article-content h2 span {
+			position:relative; font-size:16px; line-height: 22px; color:#000000; font-weight: 700;
+			padding:0 0 0 12px; display: block;
+		}
+		.article-content h2 span:before {
+			content: ""; position: absolute; top: 0; left:0; width: 4px; height: 100%;
+			background-color:#4B469C;
+			-moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px;
+		}
+
+		.article-content .article-box { padding: 16px 0; }
+		.article-content .article-box span { display:block; font-size:14px; line-height: 20px; color:#585858; }
+		.article-content .article-box span + span { padding-top: 8px;}
+
+		.bullet-list { position: relative; padding:16px 0; }
+		.bullet-list li { position: relative; padding:0 0 0 20px; font-size: 14px; line-height: 20px; color:#585858; }
+		.bullet-list li + li { margin-top: 2px;}
+		.bullet-list li:before { 
+			content: ""; position: absolute; top: 8px; left: 8px; width: 4px; height:4px; background-color: #585858;
+			-moz-border-radius: 2px; -webkit-border-radius: 2px; border-radius: 2px; 
+		}
+		.Numbered-list { position: relative; padding:16px 0; }
+		.Numbered-list li { position: relative; font-size: 14px; line-height: 20px; color:#585858; }
+		.Numbered-list li + li { margin-top: 2px;}
+		.Numbered-list li p { font-size:14px; line-height: 20px; color:#585858; display: table; width: 100%; table-layout: fixed;}
+		.Numbered-list li p i {
+			display:table-cell; vertical-align: top; font-size:12px; line-height:20px; font-weight: 700; width: 20px;
+			text-align: center; padding-right: 4px;
+		}
+		.Numbered-list li p span { display: table-cell; font-size:14px; line-height: 20px;}
+
+		.table-box { padding: 16px 0; }
+		table {
+			table-layout: fixed; width: 100%; border: 0; border-collapse: collapse; border-spacing: 0;
+			empty-cells: show; word-wrap: break-word; border:1px solid #E1E1E1;
+		}
+		table p span { font-size: 14px; line-height:20px; }
+		table thead th {
+			color: #000000; padding: 8px 12px; text-align: left;
+			border-left: 1px solid #E1E1E1; background-color: #F7F7F8; text-indent: 0; font-weight: normal;
+		}
+		table thead th:first-child { border-left-width: 0;}
+		table tbody { border-top: 1px solid #d9d9d9; } 
+		table tbody td {
+		 	color:#585858; padding: 8px 12px;
+			text-indent: 0;  border-left: 1px solid #E1E1E1; border-bottom: 1px solid #E1E1E1;
+		} 
+		table tbody td:first-child { border-left-width: 0; }
+		table tbody th {
+			color: #000000; padding: 8px 12px; text-align: left;
+			border-bottom: 1px solid #d9d9d9; background-color: #F7F7F8; text-indent: 0; font-weight: normal;
+		}
+
+		.cta-box { padding:24px 0 32px; }
+		.cta-box .cta-inner { padding:24px 20px 30px; background-color: #F7F7F8; -moz-border-radius: 16px; -webkit-border-radius: 16px; border-radius: 16px; text-align: center; }
+		.cta-box .cta-inner span { display:block; font-size:16px; line-height: 22px; color:#000000; text-align: center;}
+		.cta-box .cta-inner a {
+			display: inline-block; font-size:16px; line-height: 22px; color:#ffffff; padding:11.5px 23px; background-color: #272558;
+			border-radius: 23px; margin-top: 16px;
+		}
+		/* Content End */
+
+		/* Footer Start */
+		.footer-box { padding:0 20px 40px; }
+		.footer-box p { display:flex; justify-content: space-between; }
+		.footer-box p .left-link {
+			display:block; width: 44px; height: 44px; border:1px solid #ACAAC4;
+			-moz-border-radius: 22px; -webkit-border-radius: 22px; border-radius: 22px;
+		}
+		.footer-box p .left-link .js-btn-clipboard-copy { display: block; padding:8px;}
+		.footer-box p .right-link {
+			display: block; min-width: 140px; text-align: center; border: 1px solid #ACAAC4;
+			-moz-border-radius: 23px; -webkit-border-radius: 23px; border-radius: 23px;
+		}
+		.footer-box p .right-link a { display: block; font-size: 16px; line-height: 22px; color: #3E3877; padding:10.5px 5px;}
+		/* Footer End */
+
+		@media (min-width: 767px) {
+			.reservegnb { left:50%; margin-left:-384px; width:768px; }
+
+			.header-content h1 { padding:16px 0 8px; }
+			.header-content h1 span{ font-size: 20px; line-height: 26px; }
+			.header-content p { padding: 0 0 28px; }
+			.header-content p span { font-size:16px; line-height: 22px;}
+		}
+	</style>
+
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" charset="utf-8"></script>
+	<script type="text/javascript">
+	/* Scroll when clicking on the table of contents Start */
+	$(document).on('click', '.index-list li a', function() {
+		var headerHeight = $('#gnb').height();
+		$('html, body').animate({scrollTop: $($(this).attr('href')).offset().top - headerHeight}, 'fast');
+		return false;
+	});
+	/* Scroll when clicking on the table of contents End */
+
+	/* Move and share page Script Start */
+	var pageDomain = window.location.host == "i.onestore.net" ? "https://m.onestore.net" : "https://qa-m.onestore.net";
+
+	function goBlogUrl(){
+		history.back();
+	}
+	function goMainUrl(){
+		location.href = pageDomain + "/main/main";
+	}
+
+	function copyToClipBoard(){
+		navigator.clipboard.writeText(window.location.href)
+		.then(() => {
+			alert("Link has been copied"); // 링크가 복사되었습니다.
+		})
+		.catch(err => {
+			console.log('Something went wrong', err);
+		})
+	}
+	/* Move and share page Script End */
+	</script>
 </head>
 
 <body>
-  <main>
-    <h1>Vanilla JavaScript App</h1>
-  </main>
-</body>
+	<div id="skip">
+		<a href="#container">Go to main text</a>
+	</div>
 
+	<div id="wrap">
+		<!-- GNB Start -->
+		<div id="gnb" class="reservegnb logotextMW white">
+			<div class="gnb-content">
+				<div class="gnb-content-inner cboth">
+					<div class="gnb-content-left">
+						<div class="gnb-link oscMWgnbLink">
+							<a href="javascript:goMainUrl();" class="gnb-link-home"><i class="icon icon-logo">ONE store</i></a><i class="icon icon-ti-arrow"></i><span>Blog</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- GNB End -->
+
+		<!-- container Area Start -->
+		<div id="container">
+			<!-- header Start -->
+			<div class="header-content">
+				<div class="header-inner">
+					<h1>
+						<span>BlogTitle blogtitle blogtitle blogtitle blogtitle blogtitle blogtitle blogtitle blogtitle blogtitle blogtitle blogtitle blogtitle blogtitle blogtitle blogtitle blogtitle blogtitle blogtitle
+						</span>
+					</h1>
+					<p><span>19 Jan, 2024</span></p>
+				</div>
+			</div>
+			<!-- header End -->
+
+			<!-- Article Start -->
+			<div class="article-content">
+				<!-- Image Start -->
+				<p class="img-box"><span><img src="./res/images/blog1/event_01.png"></span></p>
+				<!-- // Image End -->
+
+				<!-- description Start -->
+				<p class="desc-box">
+					<span>Description description description description description description <strong>Boldeddescription</strong></span>
+
+					<span>Description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description</span>
+				</p>
+				<!-- // description End -->
+
+				<!-- Table of Contents Start -->
+				<div class="index-box">
+					<div class="index-box-inner">
+						<span>Table of Contents</span>
+						<ol class="index-list">
+							<li>
+								<a href="#section1">
+									<p>
+										<i>1</i>
+										<span>textnumber1 textnumber1 textnumber1 textnumber1 textnumber1 textnumber1 textnumber1</span>
+									</p>
+								</a>
+								<ul class="sub-list">
+									<li>Subtitle subtitle subtitle subtitle subtitle</li>
+									<li>Subtitle subtitle subtitle subtitle subtitle</li>
+									<li><a href="#sub1">Hover effect hover effect hover effect</a></li>
+								</ul>
+							</li>
+							<li>
+								<a href="#section2">
+									<p>
+										<i>2</i>
+										<span>textnumber2 textnumber2 textnumber2 textnumber2 textnumber2 textnumber2 textnumber2</span>
+									</p>
+								</a>
+							</li>
+							<li>
+								<a href="#section3">
+									<p>
+										<i>3</i>
+										<span>textnumber3 textnumber3 textnumber3 textnumber3 textnumber3 textnumber3 textnumber3</span>
+									</p>
+								</a>
+							</li>
+						</ol>
+					</div>
+				</div>
+				<!-- // Table of Contents End -->
+
+				<!-- Title Start -->
+				<h2 id="section1">
+					<span>textnumber1 textnumber1 textnumber1 textnumber1 textnumber1 textnumber1 textnumber1</span>
+				</h2>
+				<!-- // Title End -->
+
+				<!-- article Start -->
+				<p class="article-box">
+					<span>
+						Articletext articletext articletext articletext articletext <strong>Boldeddescription</strong>
+						<a href="#" class="btn-text">Link Text link text link text link text</a>
+					</span>
+
+					<span>Articletext articletext articletext articletext articletext articletext articletext articletext articletext articletext articletext articletext</span>
+				</p>
+				<!-- // article End -->
+
+				<!-- list (bullet) Start -->
+				<ul class="bullet-list">
+					<li>Bullettext bullettext bullettext bullettext bullettext bullettext bullettext bullettext bullettext bullettext bullettext bullettext bullettext bullettext bullettext bullettext bullettext bullettext</li>
+					<li>Bullettext bullettext bullettext bullettext bullettext bullettext bullettext</li>
+					<li>Bullettext bullettext bullettext bullettext bullettext bullettext bullettext</li>
+				</ul>
+				<!-- // list (bullet) End -->
+
+				<!-- table Start -->
+				<div class="table-box" id="sub1">
+					<table>
+						<thead>
+							<tr> 
+								<th> 
+									<p><span>Header1</span></p> 
+								</th>
+								<th> 
+									<p><span>Header2</span></p> 
+								</th>
+								<th> 
+									<p><span>Header3</span></p> 
+								</th> 
+							</tr> 
+						</thead>
+						<tbody> 
+							<tr> 
+								<td>
+									<p><span>Common common common</span></p>
+								</td>
+								<td>
+									<p><span>Common</span></p>
+								</td>
+								<td>
+									<p><span>Common</span></p>
+								</td>
+							</tr>
+							<tr> 
+								<td>
+									<p><span>Common common common</span></p>
+								</td>
+								<td>
+									<p><span>Common</span></p>
+								</td>
+								<td>
+									<p><span>Common</span></p>
+								</td>
+							</tr> 
+						</tbody> 
+					</table>
+				</div>
+				<!-- table End -->
+
+				<!-- Image Start -->
+				<p class="img-box">
+					<span><img src="./res/images/blog1/event_02.png"></span>
+					<span><img src="./res/images/blog1/event_03.png"></span>
+				</p>
+				<!-- // Image End -->
+
+				<!-- Title Start -->
+				<h2 id="section2">
+					<span>textnumber2 textnumber2 textnumber2 textnumber2 textnumber2 textnumber2 textnumber2</span>
+				</h2>
+				<!-- // Title End -->
+
+				<!-- article Start -->
+				<p class="article-box">
+					<span>
+						Articletext articletext articletext articletext articletext articletext articletext articletext articletext articletext articletext articletext
+					</span>
+				</p>  
+				<!-- // article End -->
+
+				<!-- list (Numbered) Start -->
+				<ol class="Numbered-list">
+					<li>
+						<p>
+							<i>1</i><span>Numberedtext numberedtext numberedtext numberedtext numberedtext numberedtext numberedtext numberedtext numberedtext numberedtext numberedtext numberedtext numberedtext numberedtext</span>
+						</p>
+					</li>
+					<li>
+						<p>
+							<i>2</i><span>Numberedtext numberedtext numberedtext numberedtext numberedtext numberedtext numberedtext</span>
+						</p>
+					</li>
+					<li>
+						<p>
+							<i>3</i><span>Numberedtext numberedtext numberedtext numberedtext numberedtext numberedtext numberedtext</span>
+						</p>
+					</li>
+				</ol>
+				<!-- // list (Numbered) End -->
+
+				<!-- Image Start -->
+				<p class="img-box">
+					<span><img src="./res/images/blog1/event_04.png"></span>
+				</p>
+				<!-- // Image End -->
+
+				<!-- Title Start -->
+				<h2 id="section3">
+					<span>textnumber3 textnumber3 textnumber3 textnumber3 textnumber3 textnumber3 textnumber3</span>
+				</h2>
+				<!-- // Title End -->
+
+				<!-- list (Numbered) Start -->
+				<ol class="Numbered-list">
+					<li>
+						<p>
+							<i>1</i><span>Numberedtext numberedtext numberedtext numberedtext numberedtext numberedtext numberedtext numberedtext numberedtext numberedtext numberedtext numberedtext numberedtext numberedtext</span>
+						</p>
+					</li>
+					<li>
+						<p>
+							<i>2</i><span>Numberedtext numberedtext numberedtext numberedtext numberedtext numberedtext numberedtext</span>
+						</p>
+					</li>
+					<li>
+						<p>
+							<i>3</i><span>Numberedtext numberedtext numberedtext numberedtext numberedtext numberedtext numberedtext</span>
+						</p>
+					</li>
+				</ol>
+				<!-- // list (Numbered) End -->
+			</div>
+			<!-- Article End -->
+
+			<!-- Footer Start -->
+			<div class="footer-box">
+				<!-- CTA Area Start -->
+				<div id="cta" class="cta-box" alt="Main Page">
+					<div class="cta-inner">
+						<span>Discover more about ONE store</span>
+						<a href="javascript:goMainUrl();">Visit Main Page</a>
+					</div>
+				</div>
+				<!-- CTA Area End -->
+				
+				<p>
+					<span id="sns" class="left-link" alt="Share">
+						<button class="js-btn-clipboard-copy" onclick="copyToClipBoard();" title="Copy"><i class="icon icon-share"></i></button>
+					</span>
+					<span id="list" class="right-link" alt="Blog List">
+						<a href="javascript:goBlogUrl();">List</a>
+					</span>
+				</p>
+			</div>
+			<!-- Footer End -->
+		</div>
+		<!-- // container Area End -->
+	</div>
+
+	<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"8a0d55d10a22311b","version":"2024.4.1","token":"4f40a1ae0fce4c859a9d60ea183fc9e3"}' crossorigin="anonymous"></script>
+</body>
 </html>
